@@ -11,6 +11,9 @@ const sizes = {
   height: window.innerHeight,
 };
 
+const sizeMultiplier = (Math.min(...Object.values(sizes)) / 1080);
+
+
 //camera
 const camera = new three.PerspectiveCamera(
   75,
@@ -47,7 +50,7 @@ camera.fov = 90;
 //earth
 
 const geometry = new three.SphereGeometry(
-  (Math.min(...Object.values(sizes)) / 1080) * 10,
+  sizeMultiplier * 10,
   64,
   64
 );
@@ -60,7 +63,7 @@ material.specular = new three.Color("silver");
 
 //clouds
 const cloudGeometry = new three.SphereGeometry(
-  (Math.min(...Object.values(sizes)) / 1080) * 10 + 0.1,
+  sizeMultiplier * 10 + 0.1,
   32,
   32
 );
@@ -74,7 +77,7 @@ cloudMaterial.transparent = true;
 
 //moon
 const moonGeometry = new three.SphereGeometry(
-  (Math.min(...Object.values(sizes)) / 1080) * 3,
+  sizeMultiplier * 3,
   32,
   32
 );
@@ -134,40 +137,40 @@ document.addEventListener("mousemove", () => {
 });
 
 //for touch devices
-let isTouch = false;
-let touchStartX: number;
-let touchStartY: number;
+// let isTouch = false;
+// let touchStartX: number;
+// let touchStartY: number;
 
-document.addEventListener("touchstart", (event) => {
-  isTouch = true;
-  touchStartX = event.touches[0].clientX;
-  touchStartY = event.touches[0].clientY;
-});
+// document.addEventListener("touchstart", (event) => {
+//   isTouch = true;
+//   touchStartX = event.touches[0].clientX;
+//   touchStartY = event.touches[0].clientY;
+// });
 
-document.addEventListener("touchmove", () => {
-  if (isTouch) {
-    // Handle drag event
-    // const touchMoveX = event.touches[0].clientX;
-    // const touchMoveY = event.touches[0].clientY;
-    // Calculate movement distance and direction if needed
-  }
-});
+// document.addEventListener("touchmove", () => {
+//   if (isTouch) {
+//     // Handle drag event
+//     // const touchMoveX = event.touches[0].clientX;
+//     // const touchMoveY = event.touches[0].clientY;
+//     // Calculate movement distance and direction if needed
+//   }
+// });
 
-document.addEventListener("touchend", (event) => {
-  if (isTouch) {
-    const touchEndX = event.changedTouches[0].clientX;
-    const touchEndY = event.changedTouches[0].clientY;
-    // Calculate movement distance and determine if it's a tap or a drag
-    if (Math.abs(touchEndX - touchStartX) < 10 && Math.abs(touchEndY - touchStartY) < 10) {
-      // Handle tap event
-      continueAnim = !continueAnim;
-    } else {
-      // Handle drag event
-      // do nothing
-    }
-  }
-  isTouch = false;
-});
+// document.addEventListener("touchend", (event) => {
+//   if (isTouch) {
+//     const touchEndX = event.changedTouches[0].clientX;
+//     const touchEndY = event.changedTouches[0].clientY;
+//     // Calculate movement distance and determine if it's a tap or a drag
+//     if (Math.abs(touchEndX - touchStartX) < 10 && Math.abs(touchEndY - touchStartY) < 10) {
+//       // Handle tap event
+//       continueAnim = !continueAnim;
+//     } else {
+//       // Handle drag event
+//       // do nothing
+//     }
+//   }
+//   isTouch = false;
+// });
 
 window.addEventListener("resize", () => {
   //update sizes
@@ -193,14 +196,14 @@ function animate() {
     moonToCameraAngle += 0.01;
   }
   lightSource.position.set(
-    20 * Math.cos(lightToCameraAngle),
+    sizeMultiplier * 20 * Math.cos(lightToCameraAngle),
     0,
-    20 * Math.sin(lightToCameraAngle)
+    sizeMultiplier * 20 * Math.sin(lightToCameraAngle)
   );
   moon.position.set(
-    40 * Math.sin(moonToCameraAngle),
+    sizeMultiplier * 40 * Math.sin(moonToCameraAngle),
     0,
-    40 * Math.cos(moonToCameraAngle)
+    sizeMultiplier * 40 * Math.cos(moonToCameraAngle)
   );
 
   cloud.rotation.y += 0.001;
